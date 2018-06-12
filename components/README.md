@@ -62,25 +62,25 @@ cordova build  --release  //构建
 
 服务端启动时，向iot平台获取设备信息保存，并定时更新
 
-![image]("img/servStart.jpg")
+![image](img/servStart.jpg)
 
 4.2 客户端启动  
 
 客户端启动时，向服务端获取设备信息  
 
-![image]("img/clientStart.jpg")
+![image](img/clientStart.jpg)
 
 4.3 数据变化
 
 设备数据变化时，逐层推送到客户端
 
-![image]("img/command.jpg")
+![image](img/command.jpg)
 
 4.4 指令下发
 
 控制指令通过服务端中转，由iot平台下发到设备
 
-![image]("img/dataChange.jpg")
+![image](img/dataChange.jpg)
 
 
 

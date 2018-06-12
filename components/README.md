@@ -62,7 +62,7 @@ cordova build  --release  //构建
 
 服务端启动时，向iot平台获取设备信息保存，并定时更新
 
-![image](img/servStart.jpg)
+![image](img/serverStart.jpg)
 
 4.2 客户端启动  
 

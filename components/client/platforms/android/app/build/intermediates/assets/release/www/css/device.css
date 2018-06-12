@@ -1,0 +1,34 @@
+html,body{
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: #e9e9e9;
+}
+.head{
+    height: 50px;
+    background-color: #007aff;
+    display: flex;
+    justify-content: center;
+    /*align-items: center;*/
+    line-height: 50px;
+    color: #ffffff;
+    font-weight: 600;
+}
+.device-item{
+    background-color: #FFFFFF;
+    margin: 15px 15px 0px 15px;
+    padding: 15px 20px;
+    border-radius: 5px;
+    font-weight: 500;
+}
+.device-name{
+    display: inline-block;
+}
+.device-status{
+    display: inline-block;
+    float: right;
+}
+.mui-switch:before{
+    top: -1px;
+}

@@ -1,0 +1,18 @@
+{
+  "android": {
+    "debug": {
+      "keystore": "hellosnow.jks",
+      "storePassword": "hellosnow",
+      "alias": "key0",
+      "password" : "hellos",
+      "keystoreType": ""
+    },
+    "release": {
+      "keystore": "hellosnow.jks",
+      "storePassword": "hellosnow",
+      "alias": "key0",
+      "password" : "hellos",
+      "keystoreType": ""
+    }
+  }
+}

@@ -1,4 +1,4 @@
-package tijos.framework.sensor.agenttiny8266;
+package tijos.framework.huawei.agenttiny8266;
 
 public interface IDevEventListener {
 
@@ -10,5 +10,5 @@ public interface IDevEventListener {
 	
 	void onSmartConfigEvent(int evt);
 	
-	void onAgentStarted();
+	void onAgentStarted(int evt);
 }

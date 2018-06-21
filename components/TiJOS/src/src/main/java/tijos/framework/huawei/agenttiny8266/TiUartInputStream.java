@@ -1,4 +1,4 @@
-package tijos.framework.sensor.agenttiny8266;
+package tijos.framework.huawei.agenttiny8266;
 
 import java.io.IOException;
 import java.io.InputStream;

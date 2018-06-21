@@ -1,15 +1,14 @@
-package tijos.framework.sensor.agenttiny8266;
+package tijos.framework.huawei.agenttiny8266;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.sun.media.jfxmedia.logging.Logger;
-
 import tijos.framework.devicecenter.TiUART;
 import tijos.framework.util.Delay;
 import tijos.framework.util.Formatter;
 import tijos.framework.util.LittleBitConverter;
+import tijos.framework.util.logging.Logger;
 
 /**
  * TiJOS driver for Huawei OceanConnect Platform base on ti-esp8266-oc 
@@ -43,9 +42,8 @@ public class TiAgentTiny8266 extends Thread {
 	 * @param name  Device symbol code from OC platform
 	 * @param psk   PSK for communication
 	 */
-	public TiAgentTiny8266(TiUART uart, String name, byte[] psk) {
+	public TiAgentTiny8266(TiUART uart, String name) {
 		this.endPointName = name;
-		this.dtlsPSK = psk;
 		this.uartObj = uart;
 
 		this.input = new BufferedInputStream(new TiUartInputStream(uart), 256);
@@ -72,6 +70,8 @@ public class TiAgentTiny8266 extends Thread {
 	 * @param psk
 	 */
 	public void setParameters(String svrIP, byte [] psk) {
+		if(psk.length > 16) 
+			throw new IllegalArgumentException("Invalid PSK length ");
 		this.dtlsPSK = psk;
 		this.serverIP = svrIP;
 	}
@@ -196,7 +196,7 @@ public class TiAgentTiny8266 extends Thread {
 			this.eventListener.onSmartConfigEvent(payload[0]);
 			break;
 		case 0x22:
-			this.eventListener.onAgentStarted();
+			this.eventListener.onAgentStarted(payload[0]);
 			break;
 		default:
 			break;
@@ -267,7 +267,7 @@ public class TiAgentTiny8266 extends Thread {
 		if(resp != null)
 			return resp[0];
 		
-		return -128;		
+		return -4096;		
 	}
 
 	/**
@@ -284,7 +284,7 @@ public class TiAgentTiny8266 extends Thread {
 		int pos = 0;
 
 		System.arraycopy(dtlsPSK, 0, buff, 0, dtlsPSK.length);
-		pos += dtlsPSK.length;
+		pos += 16; //fix length
 
 		byte[] name = this.endPointName.getBytes();
 
@@ -320,8 +320,6 @@ public class TiAgentTiny8266 extends Thread {
 		this.ackCmd.setCmd(expResp, expEvt);
 		this.uartObj.write(cmd, 0, cmd.length);
 		
-		
-
 		try {
 			synchronized (this.ackCmd) {
 				this.ackCmd.wait(3000);

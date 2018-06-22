@@ -67,7 +67,7 @@ public class HuaweiOceanConnect {
 
 			Logger.info("TiAgentTinySample", "Report temperature and humidity");
 
-			int ret = agent.reportData(cookie++, dataBuffer, 0, 3);
+			int ret = agent.reportData(cookie++, dataBuffer, 0, 5);
 			if (ret != 0) {
 				Logger.severe("TiAgentTinySample", "Failed to report temperature and humidity , ret = " + ret);
 				return ret;

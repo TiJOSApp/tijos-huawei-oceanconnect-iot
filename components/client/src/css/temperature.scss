@@ -1,0 +1,58 @@
+html,body{
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  color: #FFFFFF;
+}
+.header{
+  height: 50px;
+  background-color: #feda8c;
+  display: flex;
+  justify-content: center;
+  line-height: 50px;
+  color: #ffffff;
+  font-weight: 600;
+  .back{
+    float: left;
+    left: 10px;
+    position: absolute;
+    img{
+      width: 24px;
+      margin-top: 12px;
+    }
+  }
+}
+.content{
+  width: 100%;
+  height: calc(100% - 50px);
+  background-color: #feda8c;
+  .des{
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+  }
+  .temperature-content{
+    width: 100%;
+    padding-bottom: 50px;
+    position: fixed;
+    bottom: 0;
+    .temperature-item{
+      width: 100%;
+      height: 50px;
+      padding-left: 20px;
+      padding-right: 10px;
+      font-size: 14px;
+      .temperature-item-right{
+        margin-right: 30px;
+        float: right;
+        .temperature-value{
+          font-size: 26px;
+        }
+      }
+    }
+  }
+}

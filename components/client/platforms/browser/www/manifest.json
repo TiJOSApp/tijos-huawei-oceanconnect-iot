@@ -1,8 +1,8 @@
 {
   "background_color": "#FFF",
   "display": "standalone",
-  "name": "OC环境监测",
-  "short_name": "OC环境监测",
+  "name": "钛云物联",
+  "short_name": "钛云物联",
   "version": "com.example.hellosnow",
   "description": "A demo.",
   "author": "Linyi",

@@ -15,6 +15,9 @@
     },
     "com.telerik.plugins.nativepagetransitions": {
       "PACKAGE_NAME": "com.example.hellosnow"
+    },
+    "cordova-plugin-vibration": {
+      "PACKAGE_NAME": "com.example.hellosnow"
     }
   },
   "dependent_plugins": {}

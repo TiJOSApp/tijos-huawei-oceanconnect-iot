@@ -1,0 +1,56 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #e9e9e9; }
+
+.header {
+  height: 50px;
+  background-color: #007aff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  /*align-items: center;*/
+  line-height: 50px;
+  color: #ffffff;
+  font-weight: 600; }
+
+.content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+  padding: 30px;
+  width: 100%; }
+  .content > div {
+    width: calc(50% - 6px);
+    height: calc(50vw - 36px);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    color: #FFFFFF; }
+  .content div:nth-child(2n) {
+    margin-left: 10px; }
+  .content div:nth-child(n) {
+    background-color: #3AADDA; }
+  .content div:nth-child(2n) {
+    background-color: #AD8FEE; }
+  .content div:nth-child(3n) {
+    background-color: #8BBB43; }
+  .content div:nth-child(4n) {
+    background-color: #F25A46; }

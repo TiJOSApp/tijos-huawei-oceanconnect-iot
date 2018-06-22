@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="../img/icon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../plugin/mui/css/mui.min.css">
+    <link rel="stylesheet" href="../css/addTiming.css">
+    <script src="../lib/jquery.js"></script>
+    <script src="../plugin/mui/js/mui.min.js"></script>
+    <script src="../plugin/mobile-selector/jquery.selector-px.js"></script>
+    <script src="../cordova.js"></script>
+    <script src="../js/addTiming.js"></script>
+    <title>开关定时设置</title>
+</head>
+<body>
+<div class="header">
+    <span class="back"><img src="../img/back.png" alt=""></span>
+    <span>定时设置</span>
+    <span id="save" class="operation">保存</span>
+</div>
+<div class="content">
+    <div class="switch-timing-time">
+        <div class="switch-timing-time-item">
+            <span class="switch-timing-time-label">开启时间</span>
+            <span id="switch-timing-time-open-value" class="switch-timing-time-value">13:36</span>
+            <div class="spacer"></div>
+            <div id="switch-timing-time-open-status" class="mui-switch mui-switch-mini">
+                <div class="mui-switch-handle"></div>
+            </div>
+        </div>
+        <div class="switch-timing-time-item">
+            <span class="switch-timing-time-label">关闭时间</span>
+            <span id="switch-timing-time-stop-value" class="switch-timing-time-value">13:36</span>
+            <div class="spacer"></div>
+            <div id="switch-timing-time-stop-status" class="mui-switch mui-switch-mini">
+                <div class="mui-switch-handle"></div>
+            </div>
+        </div>
+    </div>
+    <div class="switch-timing-day">
+        <div class="switch-timing-day-label">
+            <span>重复/每周</span>
+        </div>
+        <div class="switch-timing-day-content">
+            <div class="switch-timing-day-item">
+                <div id="day1" class="switch-timing-day-value">日</div>
+            </div>
+            <div class="switch-timing-day-item">
+                <div id="day2" class="switch-timing-day-value">一</div>
+            </div>
+            <div class="switch-timing-day-item">
+                <div id="day3" class="switch-timing-day-value">二</div>
+            </div>
+            <div class="switch-timing-day-item">
+                <div id="day4" class="switch-timing-day-value">三</div>
+            </div>
+            <div class="switch-timing-day-item">
+                <div id="day5" class="switch-timing-day-value">四</div>
+            </div>
+            <div class="switch-timing-day-item">
+                <div id="day6" class="switch-timing-day-value">五</div>
+            </div>
+            <div class="switch-timing-day-item">
+                <div id="day7" class="switch-timing-day-value">六</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

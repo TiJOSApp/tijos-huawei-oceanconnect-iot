@@ -14,13 +14,16 @@ let keyFile = path.resolve(__dirname, 'keys/client.key');
 const HUAWEI_AUTH_URL = 'https://180.101.147.89:8743/iocm/app/sec/v1.1.0/login';
 const HUWEI_DEVICES_URL = 'https://180.101.147.89:8743/iocm/app/dm/v1.3.0/devices?pageNo=0&pageSize=50';
 const HUWEI_DEVICES_SETTING_URL = 'https://180.101.147.89:8743/iocm/app/cmd/v1.4.0/deviceCommands';
+const HUWEI_HISTORY_TEMP_DAY_URL = 'https://180.101.147.89:8743/iocm/app/data/v1.1.0/deviceDataHistory?deviceId='
 const HUAWEI_APPID = 'qvfjBMwPi9PglT678ykEIkCfouQa';
-const HUAWEI_SECRET = 'utS_3EqjG7aPCrO_wPLzdQ3L1YUa';
+const HUAWEI_SECRET = 'sEqf8nkvKStrNnRRDabiyyWXhNQa';
 let huaweiAccessToken = null;
 let huaweiDevices = {};
 let connectionCount = 0;
-
-
+let delayOpenSetting = {}; //用于存储打开的延时定时器
+let delayStopSetting = {}; //用于存储关闭的延时定时器
+let tempDayValue = {};
+let timingSetting = {};
 huaweiAuth(getDevice);
 
 function huaweiAuth(func){
@@ -40,11 +43,10 @@ function huaweiAuth(func){
     };
     request(huaweiAuthOptions, function (err, response, body) {
         if(!err && response.statusCode == 200){
-            console.log(body);
             huaweiAccessToken = JSON.parse(body).accessToken;
-            console.log('huaweiAccessToken:' + huaweiAccessToken);
+            console.log('huaweiAccessToken' + huaweiAccessToken);
             setTimeout(huaweiAuth, 3600 * 1000);
-            if(func) func();
+            if(func) func(getTempDayValue);
         }else{
             if(err){
                 console.log('huawei auth failed');
@@ -73,15 +75,17 @@ function getDevice(func){
     };
     request(huaweiDevicesOptions, function (err, response, body) {
         if(!err && response.statusCode == 200){
-            console.log(body);
             let devices = JSON.parse(body).devices;
             for (let i in devices){
                 huaweiDevices[devices[i].deviceId] = devices[i];
+                if (func) {
+                    func(devices[i].deviceId);
+                }
             }
-            console.log('huaweiDevices：', huaweiDevices);
             console.log('**************************************************');
-            setTimeout(getDevice,10000);
-            if (func) func();
+            setTimeout(function () {
+                getDevice(getTempDayValue);
+            }, 60000);
         }else{
             if(err){
                 console.log('huawei devices failed');
@@ -95,9 +99,75 @@ function getDevice(func){
     });
 }
 
+function getTempDayValue(deviceId){
+    let now = new Date();
+    let before = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    let nowText = formatDate(now.getTime());
+    let beforeText = formatDate(before.getTime());
+    console.log(beforeText);
+    console.log(nowText);
+    let url = HUWEI_HISTORY_TEMP_DAY_URL + deviceId + '&gatewayId=' + deviceId + '&serviceId=' + 'SensorStatus' + '&startTime=' + beforeText +  '&endTime=' + nowText;
+    console.log(url);
+    let huaweiDevicesOptions = {
+        url: url,
+        method: 'GET',
+        cert: fs.readFileSync(certFile),
+        key: fs.readFileSync(keyFile),
+        headers: {
+            'content-type': 'application/json',
+            'app_key': HUAWEI_APPID,
+            'Authorization': huaweiAccessToken,
+        },
+        strictSSL: false
+    };
+    request(huaweiDevicesOptions, function (err, response, body) {
+        if(!err && response.statusCode == 200){
+            let data = JSON.parse(response.body);
+            console.log(response.body);
+            tempDayValue[deviceId] = [];
+            data.deviceDataHistoryDTOs.forEach(function (item) {
+                let obj = {
+                    data: item.data,
+                    time: getDate(item.timestamp)
+                }
+                tempDayValue[deviceId].unshift(obj);
+            })
+            console.log('tempDayValue' + JSON.stringify(tempDayValue));
+            console.log('**************************************************');
+        }else{
+            if(err){
+                console.log('huawei devices history failed');
+                console.log('err:' + err);
+            }else{
+                console.log('huawei devices history failed');
+                console.log('statusCode:' + response.statusCode);
+                console.log('body:' + body);
+            }
+        }
+    });
+    function formatDate(num) {
+        num = new Date(parseInt(num));
+        let year = num.getFullYear();
+        let month = num.getMonth() >= 9 ? num.getMonth() + 1 : '0' + (num.getMonth() + 1);
+        let date = num.getDate() >= 10 ? num.getDate() : '0' + num.getDate();
+        let hour=num.getHours() >= 10 ? num.getHours() : '0' + num.getHours();
+        let minute=num.getMinutes() >= 10 ? num.getMinutes() : '0' + num.getMinutes();
+        let second=num.getSeconds() >= 10 ? num.getSeconds() : '0' + num.getSeconds();
+        return '' + year + month + date + 'T' + hour + minute + second + 'Z';
+    }
+    function getDate(str) {
+        str = str.substring(0, 4) + '/' + str.substring(4, 6) + '/' +
+            str.substring(6, 8) + ' ' + str.substring(9, 11) + ':' +
+            str.substring(11, 13) + ':' + str.substring(13, 15) + '.0';
+        let time = new Date(str).getTime() + 8 * 60 * 60 * 1000;
+        time = new Date(time);
+        return (time.getHours() >= 10 ? time.getHours() : '0' + time.getHours())
+            + ':' + (time.getMinutes() >= 10 ? time.getMinutes() : '0' + time.getMinutes());
+    }
+}
+
 function setDecice(data, func){
     let url = HUWEI_DEVICES_SETTING_URL;
-    console.log(typeof data);
     let huaweiSettingOptions = {
         url: url,
         method: 'POST',
@@ -112,10 +182,9 @@ function setDecice(data, func){
         body: data,
         strictSSL: false
     };
-    console.log(huaweiSettingOptions);
     request(huaweiSettingOptions, function (err, response, body) {
+        console.log('setting.......');
         if(!err && (response.statusCode == 200 || response.statusCode == 201)){
-            console.log(body);
             if (func) func(body, true);
         }else{
             if (func) func(body, false);
@@ -130,8 +199,6 @@ function setDecice(data, func){
         }
     });
 }
-
-
 
 app.use(bodyParser.json()); // for parsing application/json
 
@@ -157,6 +224,50 @@ app.get('/', function (req, res) {
     res.end('hello word');
 });
 
+//查询指定设备信息
+app.get('/deviceDelaySetting', function (req, res) {
+    if(req.query.deviceId){
+        let data = {};
+        if(delayOpenSetting[req.query.deviceId] && delayOpenSetting[req.query.deviceId].hasOwnProperty('id')){
+            data['delayOpenSettingTime'] = delayOpenSetting[req.query.deviceId]['time'];
+        }
+        if (delayStopSetting[req.query.deviceId] && delayStopSetting[req.query.deviceId].hasOwnProperty('id')) {
+            data['delayStopSettingTime'] = delayStopSetting[req.query.deviceId]['time'];
+        }
+        console.log(data);
+        res.json({
+            data: data,
+            err_code: '00',
+            err_msg: 'success'
+        });
+    }
+});
+
+app.get('/deviceTimingSetting', function (req, res) {
+    let data = {};
+    if(timingSetting[req.query.deviceId]){
+        data = timingSetting[req.query.deviceId];
+    }
+    if(req.query.deviceId){
+        res.json({
+            data: data,
+            err_code: '00',
+            err_msg: 'success'
+        });
+    }
+});
+
+app.get('/device', function (req, res) {
+    if(req.query.deviceId){
+        res.json({
+            data: huaweiDevices[req.query.deviceId],
+            err_code: '00',
+            err_msg: 'success'
+        });
+    }
+});
+
+//查询全部设备信息
 app.get('/devices', function (req, res) {
     res.json({
         data: huaweiDevices,
@@ -165,9 +276,22 @@ app.get('/devices', function (req, res) {
     });
 });
 
+//查询全部设备信息
+app.get('/tempDayValue', function (req, res) {
+    console.log(JSON.stringify(tempDayValue));
+    console.log(tempDayValue[req.query.deviceId]);
+    if(req.query.deviceId){
+        res.json({
+            data: tempDayValue[req.query.deviceId],
+            err_code: '00',
+            err_msg: 'success'
+        });
+    }
+});
+
+//用于华为数据订阅
 app.post('/data', function (req, res) {
     console.log('hi,data');
-    console.log(req.body);
     console.log('**************************************************');
     let device = req.body;
 
@@ -181,20 +305,14 @@ app.post('/data', function (req, res) {
     res.send(" post successfully!");
 });
 
+//用于华为数据订阅，暂时不用
 app.post('/datas', function(req, res){
-    // console.log('hi,datas');
-    // console.log(req.body);
-    // console.log('**************************************************');
-    // console.log(typeof req.body);
-    // let device = req.body;
-    // huaweiDevices[device.deviceId] = device;
-    // io.sockets.emit('deviceInfo', device);
-    res.send(" post successfully!");
+    res.send("post successfully!");
 });
 
+//即时设置
 app.post('/setting', function (req, res) {
     console.log('hi,setting');
-    console.log(req.body);
     console.log('**************************************************');
     setDecice(req.body, function (data, flag) {
         if(flag){
@@ -205,10 +323,69 @@ app.post('/setting', function (req, res) {
         res.write(JSON.stringify(data));
         res.end();
     })
-
-
 });
 
+//延时设置
+app.post('/delaySetting', function (req, res) {
+    console.log('hi,delay setting');
+    console.log('**************************************************');
+    let data = req.body.data;
+    data.forEach(function (item) {
+        if(item.hasOwnProperty('openStatus')){
+            if(delayOpenSetting[item.deviceId] && delayOpenSetting[item.deviceId]['id']){
+                clearTimeout(delayOpenSetting[item.deviceId]['id']);
+            }
+            delayOpenSetting[item.deviceId] = {};
+            if(item.openStatus){
+                delayOpenSetting[item.deviceId]['time'] = new Date().getTime() + parseInt(item.delayTime);
+                delayOpenSetting[item.deviceId]['id'] = setTimeout(function () {
+                    console.log('open');
+                    delete item.delayTime;
+                    delete item.openStatus;
+                    delayOpenSetting[item.deviceId] = {};
+                    setDecice(item);
+                }, item.delayTime);
+            }
+        } else{
+            if(delayStopSetting[item.deviceId]  && delayStopSetting[item.deviceId]['id']){
+                clearTimeout(delayStopSetting[item.deviceId]['id']);
+            }
+            delayStopSetting[item.deviceId] = {};
+            if(item.stopStatus){
+                delayStopSetting[item.deviceId]['time'] = new Date().getTime() + parseInt(item.delayTime);
+                delayStopSetting[item.deviceId]['id'] = setTimeout(function () {
+                    console.log('stop');
+                    delete item.delayTime;
+                    delete item.stopStatus;
+                    delayStopSetting[item.deviceId] = {};
+                    setDecice(item);
+                }, item.delayTime);
+            }
+        }
+    });
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.write(JSON.stringify({
+        err_code: '00'
+    }));
+    res.end();
+});
+
+//定时设置
+app.post('/timingSetting', function (req, res) {
+    console.log('hi,timing setting');
+    console.log('**************************************************');
+    let data = req.body;
+    timingSetting[data.deviceId] = data;
+    setDecice(data);
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.write(JSON.stringify({
+        err_code: '00'
+    }));
+    res.end();
+});
+
+
+//消息推送
 io.sockets.on('connection',function(socket){
     connectionCount ++;
     console.log('new connection,count:' + connectionCount);
@@ -223,10 +400,4 @@ io.sockets.on('connection',function(socket){
 server.listen(18081,function(){
     console.log('server begin...');
     console.log('**************************************************');
-});
-
-app.post('/setting', function (req, res) {
-    setTimeout(function () {
-        res.send('aaaaaa');  异步处理再返回
-    },200)
 });

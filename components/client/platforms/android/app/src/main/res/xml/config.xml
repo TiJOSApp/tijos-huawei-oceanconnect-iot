@@ -12,7 +12,7 @@
         <param name="android-package" value="com.telerik.plugins.nativepagetransitions.NativePageTransitions" />
         <param name="onload" value="true" />
     </feature>
-    <name>OC环境监测</name>
+    <name>钛云物联</name>
     <description>
         A demo.
     </description>

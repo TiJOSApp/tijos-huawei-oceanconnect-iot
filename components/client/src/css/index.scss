@@ -1,0 +1,30 @@
+html,body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+.content{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  label{
+    position: absolute;
+    margin-top: 8px;
+  }
+  input{
+    border-width: 0;
+    padding-left: 28px;
+    background: transparent;
+    color: #FFFFFF;
+    border-bottom-width: 1px;
+    border-bottom-color: #CCCCCC;
+    border-radius: 0;
+  }
+  button{
+    cursor: pointer;
+  }
+}

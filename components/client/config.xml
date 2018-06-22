@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.example.hellosnow" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>OC环境监测</name>
+    <name>钛云物联</name>
     <description>
         A demo.
     </description>
@@ -26,6 +26,7 @@
     </platform>
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="com.telerik.plugins.nativepagetransitions" spec="^0.6.5" />
+    <plugin name="cordova-plugin-vibration" spec="^3.1.0" />
     <engine name="android" spec="^7.0.0" />
     <engine name="browser" spec="^5.0.3" />
 </widget>

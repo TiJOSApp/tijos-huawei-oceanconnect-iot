@@ -6655,7 +6655,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this.toggle();
 		}
 	};
-	Toggle.prototype.toggle = function(animate) {
+	Toggle.prototype.toggle = function(animate, noFlag) { //加入触发参数noFlag
 		var classList = this.classList;
 		if (animate === false) {
 			this.handle.style.webkitTransitionDuration = this.element.style.webkitTransitionDuration = '0s';
@@ -6669,9 +6669,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			classList.add(CLASS_ACTIVE);
 			this.handle.style.webkitTransform = 'translate(' + this.handleX + 'px,0)';
 		}
-		$.trigger(this.element, 'toggle', {
-			isActive: this.classList.contains(CLASS_ACTIVE)
-		});
+		if(!noFlag){
+            $.trigger(this.element, 'toggle', {
+            	isActive: this.classList.contains(CLASS_ACTIVE)
+            });
+		}
 	};
 	Toggle.prototype.setTranslateX = $.animationFrame(function(x) {
 		if (!this.isDragging) {

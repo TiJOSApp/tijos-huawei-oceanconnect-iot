@@ -13,16 +13,17 @@
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../plugin/mui/css/mui.min.css">
     <link rel="stylesheet" href="../css/device.css">
-    <script src="../lib/jquery.js"></script>
     <script src="../lib/socket.io.js"></script>
     <script src="../lib/template-web.js"></script>
+    <script src="../lib/jquery.js"></script>
     <script src="../plugin/mui/js/mui.min.js"></script>
     <script src="../cordova.js"></script>
     <script src="../js/device.js"></script>
     <title>钛云物联</title>
 </head>
 <body>
-<div class="head">
+<div class="header">
+    <span class="back"><img src="../img/back.png" alt=""></span>
     <span>我的设备</span>
 </div>
 <div class="content mui-scroll">
@@ -36,7 +37,11 @@
     </div>
     <div class="device-status line-h-30 height-30">
         <span>状态 : </span>
-        <span class="device-status-value">{{value.deviceInfo.status}}</span>
+        {{if value.deviceInfo.status=='ONLINE'}}
+        <span class="device-status-value">在线</span>
+        {{else if value.deviceInfo.status!='ONLINE'}}
+        <span class="device-status-value">离线</span>
+        {{/if}}
     </div>
     <div class="device-val margin-t-10 line-h-30 height-30">
         <span>温度 : </span>
@@ -44,18 +49,18 @@
     </div>
     <div class="device-val margin-t-10 line-h-30 height-30">
         <span>湿度 : </span>
-        <span  class="device-humi-value">{{value.services[0].data.Humidity}}%RH</span>
+        <span  class="device-humi-value">{{value.services[0].data.Humidity}}%</span>
     </div>
     {{if value.services[1]}}
     <div class="device-setting margin-t-10 line-h-30 height-30">
-        <span>继电器</span>
+        <span>LED</span>
         <div class="display-i-b float-r">
-            {{if value.services[1].data.RelayStatus==0}}
-            <div class="device-relay-value mui-switch">
+            {{if value.services[1].data.LedStatus==0}}
+            <div class="device-led-value mui-switch mui-switch-mini">
                 <div class="mui-switch-handle"></div>
             </div>
-            {{else if value.services[1].data.RelayStatus==1}}
-            <div class="device-relay-value mui-switch mui-active">
+            {{else if value.services[1].data.LedStatus==1}}
+            <div class="device-led-value mui-switch mui-switch-mini mui-active">
                 <div class="mui-switch-handle"></div>
             </div>
             {{/if}}
@@ -64,14 +69,14 @@
     {{/if}}
     {{if value.services[2]}}
     <div class="device-setting margin-t-10 line-h-30 height-30">
-        <span>LED</span>
+        <span>继电器</span>
         <div class="display-i-b float-r">
-            {{if value.services[2].data.LedStatus==0}}
-            <div class="device-led-value mui-switch">
+            {{if value.services[2].data.RelayStatus==0}}
+            <div class="device-relay-value mui-switch mui-switch-mini">
                 <div class="mui-switch-handle"></div>
             </div>
-            {{else if value.services[2].data.LedStatus==1}}
-            <div class="device-led-value mui-switch mui-active">
+            {{else if value.services[2].data.RelayStatus==1}}
+            <div class="device-relay-value mui-switch mui-switch-mini mui-active">
                 <div class="mui-switch-handle"></div>
             </div>
             {{/if}}

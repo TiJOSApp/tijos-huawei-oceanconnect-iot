@@ -1,3 +1,5 @@
+'use strict';
+
 // var APPID = 'qvfjBMwPi9PglT678ykEIkCfouQa';
 // var APPKEY = 'utS_3EqjG7aPCrO_wPLzdQ3L1YUa';
 // var IPPORT = '180.101.147.89:8743';
@@ -10,11 +12,11 @@ function init() {
 }
 
 function onDeviceReady() {
-    StatusBar.backgroundColorByHexString("#007aff");
+    // StatusBar.backgroundColorByHexString("#45CEAC");
     // StatusBar.hide();
     setTimeout(function () {
         // window.location.href = 'html/device.html';
-        mui.openWindow('html/device.html');
+        mui.openWindow('html/deviceList.html');
     }, 1500);
     // login();
 }

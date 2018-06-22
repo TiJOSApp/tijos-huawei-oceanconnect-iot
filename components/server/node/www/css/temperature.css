@@ -1,0 +1,60 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  color: #FFFFFF; }
+
+.header {
+  height: 50px;
+  background-color: #feda8c;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  line-height: 50px;
+  color: #ffffff;
+  font-weight: 600; }
+  .header .back {
+    float: left;
+    left: 10px;
+    position: absolute; }
+    .header .back img {
+      width: 24px;
+      margin-top: 12px; }
+
+.content {
+  width: 100%;
+  height: calc(100% - 50px);
+  background-color: #feda8c; }
+  .content .des {
+    width: 100%;
+    height: 200px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    font-size: 28px; }
+  .content .temperature-content {
+    width: 100%;
+    padding-bottom: 50px;
+    position: fixed;
+    bottom: 0; }
+    .content .temperature-content .temperature-item {
+      width: 100%;
+      height: 50px;
+      padding-left: 20px;
+      padding-right: 10px;
+      font-size: 14px; }
+      .content .temperature-content .temperature-item .temperature-item-right {
+        margin-right: 30px;
+        float: right; }
+        .content .temperature-content .temperature-item .temperature-item-right .temperature-value {
+          font-size: 26px; }

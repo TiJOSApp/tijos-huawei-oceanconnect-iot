@@ -97,7 +97,7 @@ $(function () {
                 }
             },
             error: function (err) {
-                mui.toast('err', {duration: 'short', type: 'div'})
+                mui.toast('err', {duration: 'short', type: 'div'});
                 console.log(err)
             }
         })

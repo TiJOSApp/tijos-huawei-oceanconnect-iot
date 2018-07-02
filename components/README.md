@@ -1,3 +1,11 @@
+# 钛极OS(TiJOS) 华为OceanConnect（电信)平台接入案例
+
+
+
+本案例介绍如
+
+
+
 # 1.开发环境准备 #
 
 
@@ -89,7 +97,7 @@ cordova build  --release  //构建
 
 
  
-  
+
 
 
 

@@ -30,9 +30,6 @@ class AgentEventListener implements IDevEventListener {
 			case 4: // RELAY
 				oc.relayControl(action);
 				break;
-			case 5:
-				oc.relaySchedule(payload);
-				break;
 			default:
 				break;
 			}
@@ -81,7 +78,7 @@ class AgentEventListener implements IDevEventListener {
 		try {
 			if (evt == 0) {
 				oc.t800.oledPrint(0, 3, "Agent Started     ");
-				oc.reset();
+				oc.reset();	//触发数据上报
 
 			} else {
 				oc.t800.oledPrint(0, 3, "Agent Start Failed " + evt);
@@ -111,8 +108,9 @@ class KeyboardListener implements ITiKeyboardListener {
 	public void onReleased(int arg0, long arg1) {
 
 		try {
+			//进入WIFI Smart Config状态，请能过ESP Touch APP在手机端进行WIFI AP设置
 			oc.agent.beginSmartConfiguration();
-			oc.t800.oledPrint(0, 3, "Wifi SmartConfig ");
+			oc.t800.oledPrint(0, 3, "Wifi SmartConfig "); 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -138,8 +136,8 @@ class TouchListener implements ITiButtonEventListener {
 		try {
 			
 			counter ++;
-			if(counter > 3) {
-				oc.reset();
+			if(counter >= 3) {
+				oc.reset(); //触发数据上报
 				counter = 0 ;
 			}
 
@@ -165,15 +163,31 @@ class TouchListener implements ITiButtonEventListener {
 	}
 }
 
+/**
+ * Huawei OceanConnect with ESP8266 AgentTiny Demo 
+ * 
+ * 通过内置AgentTiny的ESP8266模块与华为/电信 OceanConnect平台建立连接并上报数据
+ * 该例程展示如下功能
+ * 1. WIFI AP设置 - 按下底板红色按键启动SmartConfig， 通过ESP Touch APP在手机端进行WIFI路由器配置 
+ * 2. 每5秒通过DHT11采集温湿度数据，当温度变化超过1度或湿度变化超过5%时主动上报数据到平台
+ * 3. 当收到平台控制命令下发时进行相应的控制
+ * 4. 按键事件 - 手动按3次触摸按键后强制进行数据上报
+ * 5. 20秒内无数据上报时主动上报
+ */
+ 
 public class TiAgentTinySample {
 
 	public static void main(String[] args) {
 
-		System.out.println("Huawei OceanConnect IOT Demo Start ...");
+		System.out.println("Huawei OceanConnect WIFI Demo Start ...");
 
-
+		/**
+		 * 以下参数可从OceanConnect平台获取
+		 * PSK: 通讯密钥
+		 * epName: 设备标识码
+		 * serverIP: OceanConnect 服务器 IP地址  
+		 */
 		byte[] psk = new byte[] {0x16,0x18,0x77,(byte)0xb1,0x57,0x03,(byte)0xae, (byte)0xdc, (byte)0xdd,0x10,0x2d,(byte)0xa2,0x7d,0x33,(byte)0xa7,(byte)0xba};
-
 		String epName = "201806210932";
 		String serverIP = "180.101.147.115";
 
@@ -198,14 +212,15 @@ public class TiAgentTinySample {
 			// 设置按钮事件
 			t800.setButtonEventListener(new TouchListener(oc));
 			t800.setKeyboardEventListener(new KeyboardListener(oc));
-
+			
+			//AgentTiny 初始化
 			agent.initialize();
 
+			//每5秒进行测量
 			while (true) {
 				System.out.println("Measuring");
 				t800.measure();
 				oc.reportAll();
-				oc.runSchedule();
 				Thread.sleep(5000);
 				
 			}

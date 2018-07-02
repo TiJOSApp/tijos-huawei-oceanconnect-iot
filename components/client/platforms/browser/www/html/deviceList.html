@@ -22,6 +22,7 @@
 <body>
 <div class="content">
     <span class="title">HELLO</span>
+    <span class="add"><img src="../img/plus.png" alt=""></span>
     <span class="des">每一天都是新的一天</span>
     <div class="device-list">
         <div class="device-list-left">
@@ -47,7 +48,7 @@
     <div id={{value.deviceId}} class="device-list-right-item">
         <img src="../img/type1.png" alt="">
         <div class="device-list-right-item-content">
-            <span class="device-name">{{value.deviceInfo.name}}</span>
+            <span class="device-name">{{value.deviceInfo.name || '设备'}}</span>
             <span class="device-status">{{value.deviceInfo.status}}</span>
         </div>
     </div>

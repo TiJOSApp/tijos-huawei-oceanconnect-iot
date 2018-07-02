@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="../img/icon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../plugin/mui/css/mui.min.css">
+    <link rel="stylesheet" href="../css/reviseDevice.css">
+    <script src="../lib/jquery.js"></script>
+    <script src="../plugin/mui/js/mui.min.js"></script>
+    <script src="../plugin/mobile-selector/jquery.selector-px.js"></script>
+    <script src="../cordova.js"></script>
+    <script src="../js/reviseDevice.js"></script>
+    <title>设备信息</title>
+</head>
+<body>
+<div class="header">
+    <span class="back"><img src="../img/back.png" alt=""></span>
+    <span>设备信息</span>
+    <span class="delete"><img src="../img/delete.png" alt=""></span>
+</div>
+<div class="content">
+    <div class="mui-input-row">
+        <label>设备名称</label>
+        <input type="text" class="mui-input-clear name" placeholder="请输入设备名称">
+    </div>
+    <div class="mui-input-row">
+        <label>厂商ID</label>
+        <input type="text" class="mui-input-clear manufacturerId" placeholder="请输入厂商ID">
+    </div>
+    <div class="mui-input-row">
+        <label>厂商名</label>
+        <input type="text" class="mui-input-clear manufacturerName" placeholder="请输入厂商名">
+    </div>
+    <div class="mui-input-row">
+        <label>设备类型</label>
+        <input type="text" class="mui-input-clear deviceType" placeholder="请输入设备类型">
+    </div>
+    <div class="mui-input-row">
+        <label>设备型号</label>
+        <input type="text" class="mui-input-clear model" placeholder="请输入设备型号">
+    </div>
+    <div class="mui-input-row">
+        <label>协议类型</label>
+        <input type="text" class="mui-input-clear protocolType" placeholder="请输入协议类型">
+    </div>
+    <button type="button" class="mui-btn save">确定</button>
+</div>
+</body>
+</html>

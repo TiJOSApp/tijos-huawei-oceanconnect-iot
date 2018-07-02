@@ -9,7 +9,7 @@ OceanConnect 是华为公司基于物联网、云计算和大数据等技术打�
 
 OceanConnect 正在与越来越多的合作伙伴一起，为了全联接的美好世界而努力，目前已能够提供许多高价值行业应用，比如智慧家庭、车联网、智能抄表、智能停车、平安城市等。
 
-该案例基于TiKit-T800-STM32F103A型号及传感器DEMO板，基于AgentTiny ESP8266模块。 
+该案例基于TiKit-T800-WIFI及TiKit-T800-NBIOT型号及传感器DEMO板，WIFI通讯基于AgentTiny ESP8266模块， NBIOT通讯基于BC95模块。
 
 
 
@@ -51,7 +51,7 @@ https://github.com/SuYai/OceanConnectHelp
 
 如下图所示：
 
-![1530501398671](.\img\1530501398671.png)
+![1530501398671](./img/1530501398671.png)
 
 
 
@@ -67,7 +67,7 @@ https://github.com/SuYai/OceanConnectHelp
 
 连接开发板后， 可通过安装了TiStudio的Eclipse导入TiJOS-WIFI工程， 找到src\test\java\tijos\framework\huawei\agenttiny8266\TiAgentTinySample.java文件， 在main函数中设置服务器及通讯相关参数,这些参数可通过OceanConnect平台中获取
 
-![1530501972131](.\img\1530501972131.png)
+![1530501972131](./img/1530501972131.png)
 
 修改相关通讯设置后，可通过Run As 运行该应用并通过OceanConnect平台查看相关数据。
 
@@ -77,7 +77,7 @@ https://github.com/SuYai/OceanConnectHelp
 
 连接开发板后， 可通过安装了TiStudio的Eclipse导入TiJOS-NBIOT工程， 找到TiJOS-NBIOT\src\TiBC95Sample.java文件， 在main函数中设置服务器及通讯相关参数, 如下图所示：
 
-![1530502267494](.\img\1530502267494.png)
+![1530502267494](./img/1530502267494.png)
 
 修改相关通讯设置后，可通过Run As 运行该应用并通过OceanConnect平台查看相关数据。
 

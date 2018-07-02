@@ -1,0 +1,4 @@
+#Fri Jun 29 17:39:55 CST 2018
+base.0=D\:\\mycode\\APPtest\\platforms\\android\\app\\build\\intermediates\\transforms\\dex\\release\\0
+renamed.0=classes.dex
+file.0=D\:\\mycode\\APPtest\\platforms\\android\\app\\build\\intermediates\\transforms\\dex\\release\\0\\classes.dex

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="../img/icon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../plugin/mui/css/mui.min.css">
+    <link rel="stylesheet" href="../css/temperature.css">
+    <script src="../lib/jquery.js"></script>
+    <script src="../lib/socket.io.js"></script>
+    <script src="../plugin/mui/js/mui.min.js"></script>
+    <script src="../lib/echarts.min.js"></script>
+    <script src="../cordova.js"></script>
+    <script src="../js/temperature.js"></script>
+    <title>钛云物联</title>
+</head>
+<body>
+<div class="header">
+    <span class="back"><img src="../img/back.png" alt=""></span>
+    <span id="device-name">智能温度监测</span>
+</div>
+<div class="content">
+    <div class="des">
+        <span>偏热</span>
+    </div>
+    <img src="../img/temp-bg.png" style="width: 100%;position: fixed;bottom: 0" alt="">
+    <div class="temperature-content">
+        <div class="temperature-item">
+            <span class="temperature-label">温度</span>
+            <div class="temperature-item-right">
+                <span id="temperature-value" class="temperature-value">27.3</span>
+                <span class="temperature-unit">℃</span>
+                <span class="temperature-next">></span>
+            </div>
+        </div>
+        <div class="temperature-item">
+            <span class="temperature-label">湿度</span>
+            <div class="temperature-item-right">
+                <span id="humidity-value" class="temperature-value">56.3</span>
+                <span class="temperature-unit">%</span>
+                <span class="temperature-next">></span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
